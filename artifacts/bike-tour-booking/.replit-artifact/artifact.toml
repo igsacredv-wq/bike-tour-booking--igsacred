@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Rutas en Bici"
+description = "Landing page en español para un motor de reservas de tours en bicicleta, donde los viajeros descubren rutas, consultan disponibilidad y comienzan una reserva."
+version = "1.0.0"
+id = "artifacts/bike-tour-booking"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19748
+
+[services.development]
+run = "pnpm --filter @workspace/bike-tour-booking run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bike-tour-booking", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bike-tour-booking/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19748"
+BASE_PATH = "/"
